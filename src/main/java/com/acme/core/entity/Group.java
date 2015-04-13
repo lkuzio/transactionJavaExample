@@ -3,7 +3,6 @@ package com.acme.core.entity;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.jws.soap.SOAPBinding;
 import javax.persistence.*;
 
 @Entity
@@ -48,4 +47,10 @@ public class Group {
     public void setUsers(Set<User> users) {
         this.users = users;
     }
+
+	@Override
+	public String toString() {
+		return "Group [id=" + id + ", name=" + name + "]";
+	}
+    
 }

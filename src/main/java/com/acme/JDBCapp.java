@@ -1,65 +1,59 @@
 package com.acme;
 
 import java.sql.Connection;
-import java.sql.Driver;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Savepoint;
 import java.sql.Statement;
 import java.util.HashSet;
-import java.util.Properties;
 import java.util.Set;
+
+import javax.sql.DataSource;
 
 import com.acme.core.entity.Group;
 import com.acme.core.entity.User;
+import com.acme.jdbc.JDBCDataSource;
 
-public class Server {
+public class JDBCapp {
 
 	public static void main(String[] args) {
-		System.out.println("JDBC Example");
+
+		DataSource ds = new JDBCDataSource().getDataSource();
 		Connection conn = null;
+		Connection conn2 = null;
 		Set<User> users;
 
 		try {
-			Driver myDriver = new org.postgresql.Driver();
-			DriverManager.registerDriver(myDriver);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 
-		String url = "jdbc:postgresql://localhost:5432/transexample";
-		Properties props = new Properties();
-		props.setProperty("user", "postgres");
-		props.setProperty("password", "password");
-		try {
-			conn = DriverManager.getConnection(url, props);
+			conn = ds.getConnection();
+			conn2= ds.getConnection();
 			conn.setAutoCommit(false);
 
-			Group group = new Group();
-			group.setId(0);
-			
-			User user = new User();
-			user.setName("Wladek");
-			user.setPassword("p@s$w0rD");
-			user.setGroup(group);
+			Group group = new Group("admins");
+			group.setId(1);
+
+			User user = new User("Janek","asd",group);
+			User user2 = new User("Marek","ewq321",group);
 
 			insertUser(conn, user);
+
+			insertUser(conn2, user2);
 
 			user.setPassword("newPa$$");
 			updateUser(conn, user);
+
 			
 			conn.commit();
-			
+
 			deleteUser(conn, user);
 
 			conn.commit();
-			
+
 			insertUser(conn, user);
-			
+
 			users = getUsersList(conn);
-					
+
 			conn.rollback();
 
 			users = getUsersList(conn);
@@ -93,7 +87,7 @@ public class Server {
 			ustm.close();
 		}
 	}
-	
+
 	private static void updateUser(Connection conn, User user)
 			throws SQLException {
 		String updateQuery = "UPDATE users SET name=?, password=?, group_id=? WHERE id=? ";
@@ -130,7 +124,7 @@ public class Server {
 
 			Statement stm = conn.createStatement();
 			stm.execute("select currval('users_seq')");
-			ResultSet rs=stm.getResultSet();
+			ResultSet rs = stm.getResultSet();
 			rs.next();
 			user.setId(rs.getLong(1));
 		} catch (SQLException e) {

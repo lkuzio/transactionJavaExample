@@ -20,7 +20,7 @@ public class HibernateApp {
 
         session.save(group);
         session.save(new User("jan", "pass", group));
-        session.save(new User("adam", "pass", group));
+       // session.save(new User("adam", "pass", group));
 
         session.getTransaction().commit();
 
@@ -29,7 +29,7 @@ public class HibernateApp {
         List<User> resultList = query.list();
         System.out.println("num of users: " + resultList.size());
         for (User user : resultList) {
-            System.out.println("user: " + group);
+            System.out.println("user: " + user.toString());
         }
     }
 

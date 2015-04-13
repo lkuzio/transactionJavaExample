@@ -5,9 +5,9 @@
 
 <hibernate-configuration>
     <session-factory>
-        <property name="connection.url">jdbc:postgresql://localhost:5432/transaction</property>
-        <property name="connection.username">feedme</property>
-        <property name="connection.password">feedme</property>
+        <property name="connection.url">jdbc:postgresql://localhost:5432/transexample</property>
+        <property name="connection.username">postgres</property>
+        <property name="connection.password">password</property>
         <property name="connection.driver_class">org.postgresql.Driver</property>
         <property name="dialect">org.hibernate.dialect.PostgreSQL9Dialect</property>
 
