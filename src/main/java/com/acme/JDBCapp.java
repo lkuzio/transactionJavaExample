@@ -1,75 +1,29 @@
 package com.acme;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Savepoint;
-import java.sql.Statement;
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.sql.DataSource;
-
-import com.acme.core.entity.Group;
-import com.acme.core.entity.User;
-import com.acme.jdbc.JDBCDataSource;
+import com.acme.jdbc.AutoCommitFalse;
+import com.acme.jdbc.AutoCommitTrue;
 
 public class JDBCapp {
 
 	public static void main(String[] args) {
 
-		DataSource ds = new JDBCDataSource().getDataSource();
-		Connection conn = null;
-		Connection conn2 = null;
-		Set<User> users;
+		AutoCommitFalse aCF = new AutoCommitFalse();
+		AutoCommitTrue aCT = new AutoCommitTrue();
 
 		try {
-
-			conn = ds.getConnection();
-			conn2= ds.getConnection();
-			conn.setAutoCommit(false);
-
-			Group group = new Group("admins");
-			group.setId(1);
-
-			User user = new User("Janek","asd",group);
-			User user2 = new User("Marek","ewq321",group);
-
-			insertUser(conn, user);
-
-			insertUser(conn2, user2);
-
-			user.setPassword("newPa$$");
-			updateUser(conn, user);
-
-			
-			conn.commit();
-
-			deleteUser(conn, user);
-
-			conn.commit();
-
-			insertUser(conn, user);
-
-			users = getUsersList(conn);
-
-			conn.rollback();
-
-			users = getUsersList(conn);
-
-		} catch (Exception e) {
+			aCF.saveWithoutCommit();
+			aCF.saveWithRollback();
+			aCF.saveTreeUserCommitAfterSecond();
+			aCF.saveTreeUserCommitAfterSecondRollbackAfterLast();
+			aCT.saveTreeUserCommitAfterSecond();
+			aCT.saveUserWithoutGroup();
+		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
 		}
-
 	}
 
+	/*
 	private static void deleteUser(Connection conn, User user)
 			throws SQLException {
 		String updateQuery = "DELETE FROM users WHERE id=? ";
@@ -165,5 +119,5 @@ public class JDBCapp {
 		}
 		return users;
 	}
-
+*/
 }
