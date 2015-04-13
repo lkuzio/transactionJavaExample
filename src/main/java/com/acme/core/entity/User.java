@@ -6,7 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 
@@ -20,11 +20,10 @@ public class User {
 	private String name;
 	private String password;
 	
-	@OneToMany(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="group_id")
 	
 	private Group group;
-	
 	
 	public long getId() {
 		return id;
@@ -44,5 +43,10 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+	public Group getGroup() {
+		return group;
+	}
+	public void setGroup(Group group) {
+		this.group = group;
+	}
 }
