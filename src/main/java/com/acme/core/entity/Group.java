@@ -3,12 +3,8 @@ package com.acme.core.entity;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.jws.soap.SOAPBinding;
+import javax.persistence.*;
 
 @Entity
 @Table(name="groups")
@@ -19,19 +15,37 @@ public class Group {
 	
 	private String name;
 
-	@OneToMany(mappedBy="group")
-	Set<User> users = new HashSet<User>();
-	public long getId() {
-		return id;
-	}
-	public void setId(long id) {
-		this.id = id;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
+	@OneToMany
+    private Set<User> users = new HashSet<User>();
 
+    public Group() {
+    }
+
+    public Group(String name) {
+        this.name = name;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
+    }
 }

@@ -1,13 +1,6 @@
 package com.acme.core.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 
 @Entity
@@ -18,35 +11,51 @@ public class User {
 	private long id;
 	
 	private String name;
+
 	private String password;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="group_id")
-	
 	private Group group;
-	
-	public long getId() {
-		return id;
-	}
-	public void setId(long id) {
-		this.id = id;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	public Group getGroup() {
-		return group;
-	}
-	public void setGroup(Group group) {
-		this.group = group;
-	}
+
+    public User() {
+    }
+
+    public User(String name, String password, Group group) {
+        this.name = name;
+        this.password = password;
+        this.group = group;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
+    }
 }
