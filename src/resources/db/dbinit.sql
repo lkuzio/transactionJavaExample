@@ -13,3 +13,9 @@ CREATE TABLE groups
   name character varying(255) NOT NULL,
   CONSTRAINT groups_pkey PRIMARY KEY (id)
 );
+
+CREATE SEQUENCE users_seq;
+ALTER TABLE users ALTER COLUMN id SET DEFAULT nextval('users_seq');
+
+CREATE SEQUENCE groups_seq;
+ALTER TABLE groups ALTER COLUMN id SET DEFAULT nextval('groups_seq');
