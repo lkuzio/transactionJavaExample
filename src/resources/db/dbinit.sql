@@ -19,3 +19,5 @@ ALTER TABLE users ALTER COLUMN id SET DEFAULT nextval('users_seq');
 
 CREATE SEQUENCE groups_seq;
 ALTER TABLE groups ALTER COLUMN id SET DEFAULT nextval('groups_seq');
+
+ALTER TABLE users ADD COLUMN manager_id bigint;

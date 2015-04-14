@@ -17,6 +17,10 @@ public class User {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="group_id")
 	private Group group;
+	
+	@ManyToOne(cascade={CascadeType.ALL})
+    @JoinColumn(name="manager_id")
+	private User manager;
 
     public User() {
     }
@@ -59,10 +63,19 @@ public class User {
         this.group = group;
     }
 
+    
+	public User getManager() {
+		return manager;
+	}
+
+	public void setManager(User manager) {
+		this.manager = manager;
+	}
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", password=" + password
-				+ ", group=(" + group.toString() +") ]";
+				+ ", group=" + group.toString() + ", manager=" + manager.toString() + "]";
 	}
     
     
