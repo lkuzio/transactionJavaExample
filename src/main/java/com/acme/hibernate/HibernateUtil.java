@@ -41,7 +41,7 @@ public class HibernateUtil {
             System.out.println("user: " + user.toString());
         }
 	}
-    
+
     public static void deleteAllRowFromTable(String myTable){
     	Session session = getSessionFactory().openSession();
     	session.beginTransaction();
@@ -49,5 +49,11 @@ public class HibernateUtil {
         Query query = session.createQuery(hql);
         query.executeUpdate();
         session.getTransaction().commit();
+    }
+
+    public static void checkNumberOfUsers(Session session) {
+        Query query = session.createQuery("From User ");
+        List<User> resultList = query.list();
+        System.out.println("Number of users: " + resultList.size());
     }
 }
