@@ -32,7 +32,11 @@ public class User {
 		this.group = group;
 		this.manager = manager;
 	}
-
+    public User(String name, String password) {
+        this.name = name;
+        this.password = password;
+    }
+    
 	public long getId() {
         return id;
     }
