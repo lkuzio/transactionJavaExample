@@ -1,5 +1,8 @@
 package com.acme.core.entity;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.*;
 
 
@@ -21,6 +24,9 @@ public class User {
 	@ManyToOne(cascade={CascadeType.ALL})
     @JoinColumn(name="manager_id")
 	private User manager;
+	
+	@OneToMany(mappedBy="manager")
+    private Set<User> subordinates = new HashSet<User>();
 
     public User() {
     }
@@ -74,10 +80,19 @@ public class User {
 		this.manager = manager;
 	}
 
+	public Set<User> getSubordinates() {
+		return subordinates;
+	}
+
+	public void setSubordinates(Set<User> subordinates) {
+		this.subordinates = subordinates;
+	}
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", password=" + password
-				+ ", group=" + group.toString() + ", manager=" + manager.toString() + "]";
+				+ ", group=" + (group!=null?group.toString():"no group") + ", manager=" + (manager!=null? manager.toString():"not manager") 
+				+ ", subordinates count: "+subordinates.size()+"]";
 	}
     
     

@@ -1,9 +1,14 @@
 package com.acme.hibernate;
 
+import java.util.List;
+
+import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+
+import com.acme.core.entity.User;
 
 public class HibernateUtil {
 
@@ -26,4 +31,14 @@ public class HibernateUtil {
     public static void shutdown() {
         getSessionFactory().close();
     }
+    
+    @SuppressWarnings("unchecked")
+	public static void listOfUsers(Session session) {
+		Query query = session.createQuery("From User ");
+		List<User> resultList = query.list();
+		System.out.println("num of users: " + resultList.size());
+		for (User user : resultList) {
+            System.out.println("user: " + user.toString());
+        }
+	}
 }

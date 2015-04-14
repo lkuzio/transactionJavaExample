@@ -2,10 +2,8 @@ package com.acme.hibernate;
 
 import com.acme.core.entity.Group;
 import com.acme.core.entity.User;
-import org.hibernate.Query;
-import org.hibernate.Session;
 
-import java.util.List;
+import org.hibernate.Session;
 
 
 public class HibernateApp {
@@ -19,18 +17,23 @@ public class HibernateApp {
         Group group = new Group("users");
 
         session.save(group);
-        session.save(new User("jan", "pass", group));
+        session.save(new User("jan", "pass", group, null));
        // session.save(new User("adam", "pass", group));
 
         session.getTransaction().commit();
 
-        Query query = session.createQuery("From User ");
 
-        List<User> resultList = query.list();
-        System.out.println("num of users: " + resultList.size());
-        for (User user : resultList) {
-            System.out.println("user: " + user.toString());
-        }
+        HibernateUtil.listOfUsers(session);
+        
+        
+        //Flushmode=Commit examples
+        HibernateFlushModeCommit hbm = new HibernateFlushModeCommit();
+        hbm.addUser();
+        hbm.addUserWithoutCommit();
+        hbm.addUserWithRollback();
+        hbm.addUsersWithManager();
     }
 
+    
+	
 }
