@@ -28,7 +28,7 @@ DataSource ds;
 			pstm.setString(2, "Pa$$w0rd");
 			pstm.setLong(3, 0);
 			pstm.execute();		
-			conn.commit();		//org.postgresql.util.PSQLException: Cannot commit when autoCommit is enabled.
+			//conn.commit();		//org.postgresql.util.PSQLException: Cannot commit when autoCommit is enabled.
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

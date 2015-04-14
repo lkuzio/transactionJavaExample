@@ -191,7 +191,7 @@ public class AutoCommitFalse {
 			pstm2.setLong(3, 0);
 			pstm2.execute();		
 			conn.commit();
-			conn.rollback(s1); //org.postgresql.util.PSQLException: BŁĄD: ROLLBACK TO SAVEPOINT może być użyty tylko w blokach transakcji
+			//conn.rollback(s1); //org.postgresql.util.PSQLException: BŁĄD: ROLLBACK TO SAVEPOINT może być użyty tylko w blokach transakcji
 			
 		} catch (SQLException e) {
 			e.printStackTrace();

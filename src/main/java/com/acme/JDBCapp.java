@@ -1,8 +1,15 @@
 package com.acme;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
+
+import javax.sql.DataSource;
+
 import com.acme.jdbc.AutoCommitFalse;
 import com.acme.jdbc.AutoCommitTrue;
+import com.acme.jdbc.JDBCDataSource;
+import com.acme.jdbc.JdbcIsolationTransaction;
 
 public class JDBCapp {
 
@@ -10,8 +17,10 @@ public class JDBCapp {
 
 		AutoCommitFalse aCF = new AutoCommitFalse();
 		AutoCommitTrue aCT = new AutoCommitTrue();
+		JdbcIsolationTransaction iT = new JdbcIsolationTransaction(); 
 
 		try {
+			cleanupDB();
 			aCF.saveWithoutCommit();
 			aCF.saveWithRollback();
 			aCF.saveTreeUserCommitAfterSecond();
@@ -19,13 +28,42 @@ public class JDBCapp {
 			aCF.saveUserException();
 			aCF.saveTreeUserWithSavepoints();
 			
+			cleanupDB();
 			aCT.saveTreeUserCommitAfterSecond();
 			aCT.saveUserWithoutGroup();
+			
+			cleanupDB();
+			iT.transactionReadUncommitted();
+			cleanupDB();
+			iT.transactionReadcommitted();
+			cleanupDB();
+			iT.transactionReadRepetable();
+			cleanupDB();
+			iT.transactionReadSerializable();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
+	
+	
+	private static void cleanupDB()
+			throws SQLException {
+		DataSource ds = new JDBCDataSource().getDataSource();
+		Connection conn = ds.getConnection();
+		String updateQuery = "DELETE FROM users";
+		PreparedStatement ustm = null;
+		try {
+			ustm = conn.prepareStatement(updateQuery);
+			ustm.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			ustm.close();
+			conn.close();
+		}
+	}
+	
 	/*
 	private static void deleteUser(Connection conn, User user)
 			throws SQLException {
