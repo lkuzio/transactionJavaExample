@@ -86,15 +86,13 @@ public class HibernateFlushModeAlways {
         System.out.println("* Save user-manager and user with set menager *");
         User manager = new User("Menager", "FirstUser");
         session.save(manager);
-        User user = new User("User", "SecondUser", null, manager);
-        session.save(user);
+        session.save( new User("User", "SecondUser", null, manager));
         System.out.println("* Checking befor commit number of users *");
         HibernateUtil.checkNumberOfUsers(session);
 
         System.out.println("* Commit and checking number of users *");
         tx.commit();
         HibernateUtil.checkNumberOfUsers(session);
-
         session.close();
     }
 }

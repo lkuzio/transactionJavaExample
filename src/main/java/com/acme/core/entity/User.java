@@ -21,7 +21,7 @@ public class User {
 	@JoinColumn(name="group_id")
 	private Group group;
 	
-	@ManyToOne(cascade={CascadeType.ALL})
+	@ManyToOne
     @JoinColumn(name="manager_id")
 	private User manager;
 	

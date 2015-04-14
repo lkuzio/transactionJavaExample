@@ -1,9 +1,6 @@
 package com.acme;
 
-import com.acme.hibernate.HibernateFlushModeAlways;
-import com.acme.hibernate.HibernateFlushModeCommit;
-import com.acme.hibernate.HibernateFlushModeManual;
-import com.acme.hibernate.HibernateUtil;
+import com.acme.hibernate.*;
 
 public class HibernateApp {
 
@@ -13,11 +10,11 @@ public class HibernateApp {
     	HibernateUtil.deleteAllRowFromTable("Group");
 
         //Flushmode=Always examples
-        HibernateFlushModeAlways fma = new HibernateFlushModeAlways();
-        fma.oneSession();
-        fma.oneSessionRollback();
-        fma.twoSession();
-        fma.addUsersWithManager();
+        HibernateFlushModeAlways modeAlways = new HibernateFlushModeAlways();
+        modeAlways.oneSession();
+        modeAlways.oneSessionRollback();
+        modeAlways.twoSession();
+        modeAlways.addUsersWithManager();
         
         //Flushmode=Commit examples
         HibernateFlushModeCommit hbm = new HibernateFlushModeCommit();
@@ -34,5 +31,10 @@ public class HibernateApp {
         hbmm.addUserWithRollback();
         hbmm.addUsersWithManager();
         hbmm.addUsersWithManagerRollback();
+
+        //Flushmode=AUTO examples
+        HibernateFlushModeAuto modeAuto = new HibernateFlushModeAuto();
+        modeAuto.oneSession();
+        modeAuto.twoSession();
     }
 }
