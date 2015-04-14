@@ -1,7 +1,8 @@
-package com.acme.hibernate;
+package com.acme;
 
-import com.acme.hibernate.FlushModeAlways;
-
+import com.acme.hibernate.HibernateFlushModeAlways;
+import com.acme.hibernate.HibernateFlushModeCommit;
+import com.acme.hibernate.HibernateUtil;
 
 public class HibernateApp {
 
@@ -9,13 +10,12 @@ public class HibernateApp {
 
     	HibernateUtil.deleteAllRowFromTable("User");
     	HibernateUtil.deleteAllRowFromTable("Group");
-    	
-    	
-        FlushModeAlways fma = new FlushModeAlways();
 
-        fma.addUserWithCommit();
-        fma.addUserWithoutCommit();
-        fma.addUserWithRollback();
+        //Flushmode=Always examples
+        HibernateFlushModeAlways fma = new HibernateFlushModeAlways();
+        fma.oneSession();
+        fma.oneSessionRollback();
+        fma.twoSession();
         
         //Flushmode=Commit examples
         HibernateFlushModeCommit hbm = new HibernateFlushModeCommit();
