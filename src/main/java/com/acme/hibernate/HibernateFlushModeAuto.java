@@ -15,14 +15,14 @@ public class HibernateFlushModeAuto {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = session.beginTransaction();
 
-        System.out.println("* Checking number of users at the begin *");
+        System.out.print("* Checking number of users at the begin - ");
         HibernateUtil.checkNumberOfUsers(session);
 
         session.save(new User("FMAuto", "Commit"));
-        System.out.println("* Checking number of users after saved without commit  *");
+        System.out.print("* Checking number of users after saved without commit - ");
         HibernateUtil.checkNumberOfUsers(session);
 
-        System.out.println("* Now, transaction commit and chacking number of users *");
+        System.out.print("* Now, transaction commit and chacking number of users - ");
         tx.commit();
         HibernateUtil.checkNumberOfUsers(session);
         session.close();
@@ -35,25 +35,25 @@ public class HibernateFlushModeAuto {
         Session s2 = HibernateUtil.getSessionFactory().openSession();
         Transaction tx2 = s2.beginTransaction();
 
-        System.out.println("* Checking number of users at the begin *");
+        System.out.print("* Checking number of users at the begin - ");
         HibernateUtil.checkNumberOfUsers(s1);
 
         System.out.println("* Save without commit user-manager *");
         User manager = new User("FMAuto", "s1");
         s1.save(manager);
-        System.out.println("* Before commit tx1: checking number of users - query from 1th session *");
+        System.out.print("* Before commit tx1 (1th session) - ");
         HibernateUtil.checkNumberOfUsers(s1);
-        System.out.println("* ...and query from 2nd session *");
+        System.out.print("* ...and (2nd session) - ");
         HibernateUtil.checkNumberOfUsers(s2);
         // We must commit and close 1st session before saving object with reference to 1st object!
         tx1.commit();
         s1.close();
-        System.out.println("* After commit tx1: Checking number of users - query from 2nd session *");
+        System.out.print("* After commit tx1 (2nd session) - ");
         HibernateUtil.checkNumberOfUsers(s2);
 
         s2.save( new User("User", "SecondUser", null, manager));
         tx2.commit();
-        System.out.println("* After commit tx2: Checking number of users *");
+        System.out.print("* After commit tx2 - ");
         HibernateUtil.checkNumberOfUsers(s2);
         s2.close();
     }

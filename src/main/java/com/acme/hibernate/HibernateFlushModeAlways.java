@@ -17,11 +17,11 @@ public class HibernateFlushModeAlways {
         session.setFlushMode(FlushMode.ALWAYS);
         Transaction tx = session.beginTransaction();
 
-        System.out.println("* Checking number of users at the begin *");
+        System.out.print("* Checking number of users at the begin - ");
         HibernateUtil.checkNumberOfUsers(session);
 
         session.save(new User("FMAlways", "Commit"));
-        System.out.println("* Checking number of users after saved without commit  *");
+        System.out.print("* Checking number of users after saved without commit - ");
         HibernateUtil.checkNumberOfUsers(session);
 
         System.out.println("* Now, transaction commit  *");
@@ -35,14 +35,14 @@ public class HibernateFlushModeAlways {
         session.setFlushMode(FlushMode.ALWAYS);
         Transaction tx = session.beginTransaction();
 
-        System.out.println("* Checking number of users at the begin *");
+        System.out.print("* Checking number of users at the begin - ");
         HibernateUtil.checkNumberOfUsers(session);
 
         System.out.println("* Save and checking *");
         session.save(new User("FMAlways", "rollback"));
         HibernateUtil.checkNumberOfUsers(session);
 
-        System.out.println("* Now, transaction rollback  *");
+        System.out.println("* Now, transaction rollback - ");
         tx.rollback();
         HibernateUtil.checkNumberOfUsers(session);
         session.close();
@@ -56,18 +56,18 @@ public class HibernateFlushModeAlways {
         Session s2 = HibernateUtil.getSessionFactory().openSession();
         Transaction tx2 = s2.beginTransaction();
 
-        System.out.println("* Checking number of users at the begin *");
+        System.out.print("* Checking number of users at the begin - ");
         HibernateUtil.checkNumberOfUsers(s1);
 
         System.out.println("* Save without commit *");
         s1.save(new User("FMAlways", "s1"));
-        System.out.println("* Checking number of users - query from 1th session *");
+        System.out.print("* Before commit in 1th session - ");
         HibernateUtil.checkNumberOfUsers(s1);
 
-        System.out.println("* Checking number of users - query from 2nd session *");
+        System.out.print("* ...and in 2th session - ");
         HibernateUtil.checkNumberOfUsers(s2);
 
-        System.out.println("* Commit and checking number of users *");
+        System.out.print("* Commit and checking for 2th session - ");
         tx1.commit();
         HibernateUtil.checkNumberOfUsers(s2);
         s1.close();
@@ -80,17 +80,17 @@ public class HibernateFlushModeAlways {
         session.setFlushMode(FlushMode.ALWAYS);
         Transaction tx = session.beginTransaction();
 
-        System.out.println("* Checking number of users at the begin *");
+        System.out.print("* Checking number of users at the begin - ");
         HibernateUtil.checkNumberOfUsers(session);
 
         System.out.println("* Save user-manager and user with set menager *");
         User manager = new User("Menager", "FirstUser");
         session.save(manager);
         session.save( new User("User", "SecondUser", null, manager));
-        System.out.println("* Checking befor commit number of users *");
+        System.out.print("* Checking befor commit number of users - ");
         HibernateUtil.checkNumberOfUsers(session);
 
-        System.out.println("* Commit and checking number of users *");
+        System.out.print("* Commit and checking number of users - ");
         tx.commit();
         HibernateUtil.checkNumberOfUsers(session);
         session.close();
