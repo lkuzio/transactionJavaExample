@@ -11,13 +11,16 @@ public class HibernateFlushModeManual {
 	public void addUser() {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		session.setFlushMode(FlushMode.MANUAL);
+		System.out.println("+++ Save and read by the same session (FlashMode = MANUAL) +++");
 		Transaction tx = session.beginTransaction();
 		User user = new User("ManualUserWithCommit", "asd", null, null);
 		session.save(user);
-		HibernateUtil.listOfUsers(session);
 		tx.commit();
-		HibernateUtil.listOfUsers(session);
+		System.out.print("Before session.flush(): ");
+		HibernateUtil.checkNumberOfUsers(session);
 		session.flush();
+		System.out.print("After session.flush(): ");
+		HibernateUtil.checkNumberOfUsers(session);
 		session.close();
 	}
 
@@ -25,10 +28,10 @@ public class HibernateFlushModeManual {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		session.setFlushMode(FlushMode.MANUAL);
 		User user = new User("ManualUserWithoutCommit", "asd", null, null);
-		HibernateUtil.listOfUsers(session);
+		HibernateUtil.checkNumberOfUsers(session);
 		session.save(user);
 		session.flush();
-		HibernateUtil.listOfUsers(session);
+		HibernateUtil.checkNumberOfUsers(session);
 		session.close();
 	}
 
@@ -37,12 +40,17 @@ public class HibernateFlushModeManual {
 		session.setFlushMode(FlushMode.MANUAL);
 		Transaction tx = session.beginTransaction();
 		User user = new User("ManualUserWithRollback", "asd", null, null);
-		HibernateUtil.listOfUsers(session);
+		System.out.print("Before session.save(): ");
+		HibernateUtil.checkNumberOfUsers(session);
 		session.save(user);
-		HibernateUtil.listOfUsers(session);
+		System.out.print("Before tx.rollback(): ");
+		HibernateUtil.checkNumberOfUsers(session);
 		tx.rollback();
+		System.out.print("Before session.flush(): ");
+		HibernateUtil.checkNumberOfUsers(session);
 		session.flush();
-		HibernateUtil.listOfUsers(session);
+		System.out.print("after session.flush(): ");
+		HibernateUtil.checkNumberOfUsers(session);
 		session.close();
 	}
 
@@ -56,10 +64,10 @@ public class HibernateFlushModeManual {
 		session.save(manager);
 		session.save(user);
 		session.save(user2);
-		HibernateUtil.listOfUsers(session);
+		HibernateUtil.checkNumberOfUsers(session);
 		session.flush();
 		tx.commit();
-		HibernateUtil.listOfUsers(session);
+		HibernateUtil.checkNumberOfUsers(session);
 		session.close();
 	}
 	
@@ -84,7 +92,7 @@ public class HibernateFlushModeManual {
 		User user2 = new User("ManualRBSecondSlave", "abc", null, manager);
 		session.save(user);
 		session.save(user2);	
-		HibernateUtil.listOfUsers(session);
+		HibernateUtil.checkNumberOfUsers(session);
 		
 		session.flush();
 		tx.commit();

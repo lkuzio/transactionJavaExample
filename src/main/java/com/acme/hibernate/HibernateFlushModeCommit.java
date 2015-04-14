@@ -16,9 +16,9 @@ public class HibernateFlushModeCommit {
 		Transaction tx = session.beginTransaction();
 		User user = new User("UserWithCommit", "asd", null, null);
 		session.save(user);
-		HibernateUtil.listOfUsers(session);
+		HibernateUtil.checkNumberOfUsers(session);
 		tx.commit();
-		HibernateUtil.listOfUsers(session);
+		HibernateUtil.checkNumberOfUsers(session);
 		session.close();
 	}
 
@@ -26,9 +26,9 @@ public class HibernateFlushModeCommit {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		session.setFlushMode(FlushMode.COMMIT);
 		User user = new User("UserWithoutCommit", "asd", null, null);
-		HibernateUtil.listOfUsers(session);
+		HibernateUtil.checkNumberOfUsers(session);
 		session.save(user);
-		HibernateUtil.listOfUsers(session);
+		HibernateUtil.checkNumberOfUsers(session);
 		session.close();
 	}
 
@@ -37,11 +37,11 @@ public class HibernateFlushModeCommit {
 		session.setFlushMode(FlushMode.COMMIT);
 		Transaction tx = session.beginTransaction();
 		User user = new User("UserWithRollback", "asd", null, null);
-		HibernateUtil.listOfUsers(session);
+		HibernateUtil.checkNumberOfUsers(session);
 		session.save(user);
-		HibernateUtil.listOfUsers(session);
+		HibernateUtil.checkNumberOfUsers(session);
 		tx.rollback();
-		HibernateUtil.listOfUsers(session);
+		HibernateUtil.checkNumberOfUsers(session);
 		session.close();
 	}
 
@@ -55,9 +55,9 @@ public class HibernateFlushModeCommit {
 		session.save(manager);
 		session.save(user);
 		session.save(user2);
-		HibernateUtil.listOfUsers(session);
+		HibernateUtil.checkNumberOfUsers(session);
 		tx.commit();
-		HibernateUtil.listOfUsers(session);
+		HibernateUtil.checkNumberOfUsers(session);
 		session.close();
 	}
 	
@@ -81,9 +81,9 @@ public class HibernateFlushModeCommit {
 		User user2 = new User("SecondSlave", "abc", null, manager);
 		session.save(user);
 		session.save(user2);
-		HibernateUtil.listOfUsers(session);
+		HibernateUtil.checkNumberOfUsers(session);
 		tx.commit();
-		HibernateUtil.listOfUsers(session);
+		HibernateUtil.checkNumberOfUsers(session);
 		
 		session.close();
 		
