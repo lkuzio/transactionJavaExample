@@ -41,4 +41,13 @@ public class HibernateUtil {
             System.out.println("user: " + user.toString());
         }
 	}
+    
+    public static void deleteAllRowFromTable(String myTable){
+    	Session session = getSessionFactory().openSession();
+    	session.beginTransaction();
+        String hql = String.format("delete from %s",myTable);
+        Query query = session.createQuery(hql);
+        query.executeUpdate();
+        session.getTransaction().commit();
+    }
 }

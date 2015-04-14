@@ -7,6 +7,10 @@ public class HibernateApp {
 
     public static void main(String[] args) {
 
+    	HibernateUtil.deleteAllRowFromTable("User");
+    	HibernateUtil.deleteAllRowFromTable("Group");
+    	
+    	
         FlushModeAlways fma = new FlushModeAlways();
 
         fma.addUserWithCommit();

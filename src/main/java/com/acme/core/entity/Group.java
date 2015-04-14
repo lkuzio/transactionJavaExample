@@ -14,7 +14,7 @@ public class Group {
 	
 	private String name;
 
-	@OneToMany
+	@OneToMany(mappedBy="group")
     private Set<User> users = new HashSet<User>();
 
     public Group() {
