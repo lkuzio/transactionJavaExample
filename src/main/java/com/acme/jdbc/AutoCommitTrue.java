@@ -58,7 +58,7 @@ DataSource ds;
 			pstm.setString(2, "Pa$$w0rd");
 			pstm.setLong(3, 0);
 			pstm.execute();		
-			conn.commit();		//org.postgresql.util.PSQLException: Cannot commit when autoCommit is enabled.
+			//conn.commit();		//org.postgresql.util.PSQLException: Cannot commit when autoCommit is enabled.
 			pstm= conn.prepareStatement(sql);
 			pstm.setString(1, "NameNoGroup");
 			pstm.setString(2, "Pa$$w0rd");

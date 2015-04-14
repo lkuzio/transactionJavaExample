@@ -16,6 +16,9 @@ public class JDBCapp {
 			aCF.saveWithRollback();
 			aCF.saveTreeUserCommitAfterSecond();
 			aCF.saveTreeUserCommitAfterSecondRollbackAfterLast();
+			aCF.saveUserException();
+			aCF.saveTreeUserWithSavepoints();
+			
 			aCT.saveTreeUserCommitAfterSecond();
 			aCT.saveUserWithoutGroup();
 		} catch (SQLException e) {
