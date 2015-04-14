@@ -25,13 +25,15 @@ public class User {
     public User() {
     }
 
-    public User(String name, String password, Group group) {
-        this.name = name;
-        this.password = password;
-        this.group = group;
-    }
+    public User(String name, String password, Group group, User manager) {
+		super();
+		this.name = name;
+		this.password = password;
+		this.group = group;
+		this.manager = manager;
+	}
 
-    public long getId() {
+	public long getId() {
         return id;
     }
 
