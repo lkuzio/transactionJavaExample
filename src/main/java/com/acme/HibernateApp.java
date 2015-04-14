@@ -2,6 +2,7 @@ package com.acme;
 
 import com.acme.hibernate.HibernateFlushModeAlways;
 import com.acme.hibernate.HibernateFlushModeCommit;
+import com.acme.hibernate.HibernateFlushModeManual;
 import com.acme.hibernate.HibernateUtil;
 
 public class HibernateApp {
@@ -23,5 +24,14 @@ public class HibernateApp {
         hbm.addUserWithoutCommit();
         hbm.addUserWithRollback();
         hbm.addUsersWithManager();
+        hbm.addUsersWithManagerRollback();
+        
+        //Flushmode=MANUAL examples
+        HibernateFlushModeManual hbmm = new HibernateFlushModeManual();
+        hbmm.addUser();
+        hbmm.addUserWithoutCommit();
+        hbmm.addUserWithRollback();
+        hbmm.addUsersWithManager();
+        hbmm.addUsersWithManagerRollback();
     }
 }
