@@ -17,6 +17,7 @@ public class HibernateApp {
         fma.oneSession();
         fma.oneSessionRollback();
         fma.twoSession();
+        fma.addUsersWithManager();
         
         //Flushmode=Commit examples
         HibernateFlushModeCommit hbm = new HibernateFlushModeCommit();
