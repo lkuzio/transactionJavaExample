@@ -6,10 +6,13 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
+import com.acme.core.entity.User;
 import com.acme.jdbc.AutoCommitFalse;
 import com.acme.jdbc.AutoCommitTrue;
 import com.acme.jdbc.JDBCDataSource;
 import com.acme.jdbc.JdbcIsolationTransaction;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class JDBCapp {
 

@@ -9,6 +9,7 @@ import javax.persistence.*;
 @Entity
 @Table(name="users")
 public class User {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
@@ -17,15 +18,15 @@ public class User {
 
 	private String password;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
 	@JoinColumn(name="group_id")
 	private Group group;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     @JoinColumn(name="manager_id")
 	private User manager;
 	
-	@OneToMany(mappedBy="manager")
+	@OneToMany(mappedBy="manager", cascade=CascadeType.ALL)
     private Set<User> subordinates = new HashSet<User>();
 
     public User() {
