@@ -34,11 +34,11 @@ public class JDBCapp {
 			
 			cleanupDB();
 			iT.transactionReadUncommitted();
-			cleanupDB();
+
 			iT.transactionReadcommitted();
-			cleanupDB();
+
 			iT.transactionReadRepetable();
-			cleanupDB();
+
 			iT.transactionReadSerializable();
 		} catch (SQLException e) {
 			e.printStackTrace();
