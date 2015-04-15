@@ -156,7 +156,7 @@ public class AutoCommitFalse {
 			pstm.setLong(3, 0);
 			pstm.execute();			
 			conn.commit();
-			throw new Exception();
+//			throw new Exception();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
