@@ -215,5 +215,51 @@ public class JdbcIsolationTransaction {
 		}
 		System.out.println("\n ************ end transactionReadSerializable:");
 	}
+	
+	public void transactionReadSerializable2() throws SQLException {
+		System.out.println(" ************** transactionReadSerializable:");
+		Connection conn = null;
+		Connection conn2 = null;
+		Connection conn3 = null;
+		PreparedStatement pstm = null;
+		try {
+			conn = ds.getConnection();
+			conn.setAutoCommit(false);
+			conn.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
+			conn2 = ds.getConnection();
+			conn2.setAutoCommit(false);
+			conn2.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
+
+			String selectQuery = "SELECT * FROM users";
+			String sql = "UPDATE users SET name='Aktualny'";
+
+			System.out.println("\nSelected before update: ");
+			selectAllRows(conn, selectQuery);
+			
+			pstm = conn2.prepareStatement(sql);
+			pstm.execute();
+
+			System.out.println("\nSelected after update: ");
+			selectAllRows(conn, selectQuery);
+			System.out.println("\nSelected after update (the same transaction): ");
+			selectAllRows(conn2, selectQuery);
+			conn2.commit();
+
+
+			conn3 = ds.getConnection();
+			conn3.setAutoCommit(false);
+			conn3.setTransactionIsolation(Connection.TRANSACTION_REPEATABLE_READ);
+			System.out.println("\nSelected after commit (3th transaction): ");
+			selectAllRows(conn3, selectQuery);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			pstm.close();
+			conn.close();
+			conn2.close();
+		}
+		System.out.println("\n ************ end transactionReadSerializable:");
+	}
 
 }

@@ -40,6 +40,7 @@ public class JDBCapp {
 			iT.transactionReadRepetable();
 
 			iT.transactionReadSerializable();
+			iT.transactionReadSerializable2();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
