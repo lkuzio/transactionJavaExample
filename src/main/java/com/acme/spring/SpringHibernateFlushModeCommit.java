@@ -39,6 +39,7 @@ public class SpringHibernateFlushModeCommit {
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
     }
+
     public void addUser() {
         Session s = sessionFactory.openSession();
         s.setFlushMode(FlushMode.COMMIT);

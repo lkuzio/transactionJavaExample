@@ -43,9 +43,7 @@
 	<bean id="transactionManager"
 		  class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
-		<!--<property name="dataSource" ref="dataSource" />-->
 	</bean>
-
 
 	<bean id="userDao" class="com.acme.core.dao.impl.UserDao">
 		<property name="sessionFactory" ref="sessionFactory"/>
@@ -62,6 +60,11 @@
 	</bean>
 
 	<bean id="springHibernateFlushModeCommit" class="com.acme.spring.SpringHibernateFlushModeCommit">
+		<property name="sessionFactory" ref="sessionFactory"/>
+		<property name="userDao" ref="userDao"/>
+	</bean>
+
+	<bean id="springHibernateFlushModeManual" class="com.acme.spring.SpringHibernateFlushModeManual">
 		<property name="sessionFactory" ref="sessionFactory"/>
 		<property name="userDao" ref="userDao"/>
 	</bean>
