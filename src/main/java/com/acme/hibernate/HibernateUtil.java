@@ -1,5 +1,6 @@
 package com.acme.hibernate;
 
+import java.sql.Connection;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -12,11 +13,18 @@ import com.acme.core.entity.User;
 
 public class HibernateUtil {
 
-    private static SessionFactory sessionFactory = buildSessionFactory();
+    //Session Factory with set transaction isolation read commited
+    private static SessionFactory sessionFactory = buildSessionFactory(2);
 
-    private static SessionFactory buildSessionFactory() {
+    //Session Factory with set transaction isolation repetable read
+    private static SessionFactory sessionFactoryRR = buildSessionFactory(4);
+
+    //Session Factory with set transaction isolation repetable read
+    private static SessionFactory sessionFactorySerializable = buildSessionFactory(8);
+
+    private static SessionFactory buildSessionFactory(Integer isolation) {
         try {
-            Configuration configuration = new Configuration().configure();
+            Configuration configuration = new Configuration().configure().setProperty("hibernate.connection.isolation", isolation.toString());
             StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
             return configuration.buildSessionFactory(builder.build());
         } catch (Throwable ex) {
@@ -28,8 +36,12 @@ public class HibernateUtil {
         return sessionFactory;
     }
 
-    public static void shutdown() {
-        getSessionFactory().close();
+    public static SessionFactory getSessionFactoryRR() {
+        return sessionFactoryRR;
+    }
+
+    public static SessionFactory getSessionFactorySerializable() {
+        return sessionFactorySerializable;
     }
     
     @SuppressWarnings("unchecked")

@@ -29,7 +29,7 @@ public class HibernateFlushModeAuto {
     }
 
     public void twoSession() {
-        System.out.println("+++ Save by 1st session and read by 2nd (FlashMode = AUTO) +++");
+        System.out.println("+++ Save user by 1st session, and save 2nd user with reference to 1th by 2nd session (FlashMode = AUTO) +++");
         Session s1 = HibernateUtil.getSessionFactory().openSession();
         Transaction tx1 = s1.beginTransaction();
         Session s2 = HibernateUtil.getSessionFactory().openSession();
