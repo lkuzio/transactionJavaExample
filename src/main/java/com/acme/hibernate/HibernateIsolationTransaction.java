@@ -4,7 +4,6 @@ import com.acme.core.entity.User;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public class HibernateIsolationTransaction {
@@ -77,12 +76,13 @@ public class HibernateIsolationTransaction {
         System.out.println("\nSelected before insert: ");
         selectAllRows(s1);
 
-        User user = new User("User", "pass");
+        User user = new User("UserS", "pass1");
         long userId = (Long) s2.save(user);
         tx2.commit();
 
         System.out.println("\nSelected by session 1 after insert and commit: ");
         selectAllRows(s1);
+
         System.out.println("\nSelected by transaction 2: ");
         selectAllRows(s2);
 
@@ -102,16 +102,14 @@ public class HibernateIsolationTransaction {
         s2.close();
         Session s3 = HibernateUtil.getSessionFactoryRR().openSession();
         Transaction tx3 = s3.beginTransaction();
-        System.out.println("\n And selected in 3th: ");
+        System.out.println("\n Selected in 3th transaction (created now) with lvl REPETABLE READ, after closed 2nd session: ");
         selectAllRows(s3);
 
         tx1.commit();
         System.out.println("\nSelected in 1th transaction after commit this transaction: ");
         selectAllRows(s1);
 
-
         s1.close();
-
         s3.close();
         System.out.println("\n ************ end TRANSACTION REPEATABLE READ");
     }

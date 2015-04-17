@@ -19,7 +19,7 @@ public class HibernateUtil {
     //Session Factory with set transaction isolation repetable read
     private static SessionFactory sessionFactoryRR = buildSessionFactory(4);
 
-    //Session Factory with set transaction isolation repetable read
+    //Session Factory with set transaction isolation serializable
     private static SessionFactory sessionFactorySerializable = buildSessionFactory(8);
 
     private static SessionFactory buildSessionFactory(Integer isolation) {
